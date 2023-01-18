@@ -9,9 +9,11 @@ using Microsoft.OpenApi.Models;
 using OrderApi.Data.Database;
 using OrderApi.Data.Repository.v1;
 using OrderApi.Domain.Entities;
+using OrderApi.Interface.RabbitMQ.v1;
 using OrderApi.Interface.Repository.v1;
 using OrderApi.Interface.Service.v1;
 using OrderApi.Messaging.Receive.Options.v1;
+using OrderApi.Messaging.Receive.Receiver.v1;
 using OrderApi.Model.v1;
 using OrderApi.Service.v1.Command;
 using OrderApi.Service.v1.Query;
@@ -105,6 +107,7 @@ namespace OrderApi
             if (rabbitMqSettings.Enabled)
             {
                 services.AddHostedService<RabbitMQSetupConsumer>();
+                services.AddScoped<IRabbitMQListener, RabbitMQListener>();
             }
         }
 
