@@ -1,0 +1,28 @@
+usefull link https://www.composerize.com/
+
+docker commands
+
+docker build -t customerapi . -f CustomerApi/Dockerfile
+docker run -p 32789:80 -p 32788:443 customerapi
+
+docker tag customerapi dtarasiuta/customerapi
+docker push dtarasiuta/customerapi 
+docker run -p 32789:80 -p 32788:443 dtarasiuta/customerapi
+
+//without certificate
+docker run -p 32789:80 -p 32788:443 -e "ASPNETCORE_URLS=https://+;http://+" wolfgangofner/customerapi
+
+//create certificate
+dotnet dev-certs https -ep D:\study\MyMicroservices\cert.pfx -p DevPass
+
+//with certificate
+docker run -p 32789:80 -p 32788:443 
+    -e Kestrel__Certificates__Default__Path=/app/Infrastructure/Certificate/cert.pfx 
+    -e Kestrel__Certificates__Default__Password=DevPass 
+    -e "ASPNETCORE_URLS=https://+;http://+" 
+    -v D:\study\MyMicroservices\:/app/Infrastructure/Certificate orderapi
+
+docker-compose up -d
+docker-compose down
+
+docker-compose -f docker-compose.Build.yml up -d
