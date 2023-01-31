@@ -1,5 +1,4 @@
-﻿using B2B.InventorySyncApp.RabbitMQ;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

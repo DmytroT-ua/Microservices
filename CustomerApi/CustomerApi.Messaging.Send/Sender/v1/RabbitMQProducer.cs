@@ -46,6 +46,7 @@ namespace CustomerApi.Messaging.Send.Sender.v1
             }
             catch (Exception ex)
             {
+                Console.WriteLine("RabbitMQProducer.SendMessage" + ex.ToString());
                 //_log.LogError("RabbitMQProducer.SendMessageError", ex);
                 throw;
             }

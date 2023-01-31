@@ -7,7 +7,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
-namespace B2B.InventorySyncApp.RabbitMQ
+namespace OrderApi.Messaging.Receive.Receiver.v1
 {
     public class RabbitMQSetupConsumer : BackgroundService
     {
@@ -26,6 +26,8 @@ namespace B2B.InventorySyncApp.RabbitMQ
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Console.WriteLine("RabbitMQSetupConsumer.Start");
+
             try
             {
                 _connection = GetConnection();
@@ -64,6 +66,7 @@ namespace B2B.InventorySyncApp.RabbitMQ
             }
             catch (Exception ex)
             {
+                Console.WriteLine("RabbitMQSetupConsumer.ExecuteAsync" + ex.ToString());
             }
         }
 
@@ -96,6 +99,8 @@ namespace B2B.InventorySyncApp.RabbitMQ
                 var rabbitMqListener = scope.ServiceProvider.GetService<IRabbitMQListener>();
                 string message = Encoding.UTF8.GetString(@event.Body.ToArray());
                 bool processSucceded = await rabbitMqListener.Subscribe(@event.RoutingKey, message);
+
+                Console.WriteLine("RabbitMQSetupConsumer.MessageRecieved " + message);
 
                 if (processSucceded)
                 {
